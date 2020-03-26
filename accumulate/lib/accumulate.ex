@@ -17,5 +17,15 @@ defmodule Accumulate do
 
   @spec accumulate(list, (any -> any)) :: list
   def accumulate(list, fun) do
+    go(list, fun, [])
+  end
+
+  @spec go(list, (any -> any), list) :: list
+  defp go([], _, result) do
+    Enum.reverse(result)
+  end
+
+  defp go([head | tail], fun, result) do
+    go(tail, fun, [fun.(head) | result])
   end
 end
